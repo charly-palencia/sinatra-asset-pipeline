@@ -1,0 +1,12 @@
+// Use @import instead of require directives:
+@import "colors";
+
+// Working mixins/variables, thanks to sprockets-sass:
+body {
+  background: $color;
+}
+
+// Using sprockets-sass's asset path functions:
+#rails {
+  background: asset-url("rails.png", $digest: true);
+}
