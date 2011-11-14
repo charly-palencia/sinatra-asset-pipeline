@@ -2,17 +2,26 @@ require "bundler"
 Bundler.require
 
 class App < Sinatra::Base
-  set :sprockets,     Sprockets::Environment.new(root)
-  set :precompile,    [ /\w+\.(?!js|css).+/, /application.(css|js)$/ ]
-  set :assets_prefix, "/assets"
-  set :digest_assets, false
-  set(:assets_path)   { File.join public_folder, assets_prefix }
+  set :sprockets,        Sprockets::Environment.new(root)
+  set :precompile,       [ /\w+\.(?!js|css).+/, /application.(css|js)$/ ]
+  set :assets_prefix,    "/assets"
+  set :digest_assets,    false
+  set(:stylesheets_path) { File.join(root, "assets", "stylesheets") }
+  set(:javascripts_path) { File.join(root, "assets", "javascripts") }
+  set(:images_path)      { File.join(root, "assets", "images") }
+  set(:assets_path)      { File.join public_folder, assets_prefix }
   
   configure do
     # Setup Sprockets
-    sprockets.append_path File.join(root, "assets", "stylesheets")
-    sprockets.append_path File.join(root, "assets", "javascripts")
-    sprockets.append_path File.join(root, "assets", "images")
+    sprockets.append_path stylesheets_path
+    sprockets.append_path javascripts_path
+    sprockets.append_path images_path
+    
+    #
+    Compass.configuration do |compass|
+      compass.sass_dir = stylesheets_path
+      compass.http_stylesheets_path = assets_prefix
+    end
 
     # Configure Sprockets::Helpers (if necessary)
     Sprockets::Helpers.configure do |config|
