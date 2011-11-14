@@ -13,3 +13,6 @@ body {
 #rails {
   background: asset-url("rails.png", $digest: true);
 }
+
+// Compass Sprites
+@import "icon/*.png";
