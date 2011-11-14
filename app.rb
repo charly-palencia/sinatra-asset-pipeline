@@ -17,10 +17,12 @@ class App < Sinatra::Base
     sprockets.append_path javascripts_path
     sprockets.append_path images_path
     
-    #
+    # Configure Compass to work with Sprockets
     Compass.configuration do |compass|
-      compass.sass_dir = stylesheets_path
+      compass.sass_path             = stylesheets_path
       compass.http_stylesheets_path = assets_prefix
+      compass.images_path           = images_path
+      compass.http_images_path      = assets_prefix
     end
 
     # Configure Sprockets::Helpers (if necessary)
